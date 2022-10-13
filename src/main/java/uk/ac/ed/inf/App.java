@@ -1,13 +1,15 @@
 package uk.ac.ed.inf;
 
-/**
- * Hello world!
- *
- */
-public class App 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.net.URL;
+
+public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
     }
+
+
 }
