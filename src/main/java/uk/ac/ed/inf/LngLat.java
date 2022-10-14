@@ -1,7 +1,11 @@
 package uk.ac.ed.inf;
 
+/**
+ * This record class stores the coordinate points (longitude and latitude)
+ * @param lng is the x coordinate
+ * @param lat is the y coordinate
+ */
 public record LngLat(double lng, double lat){
-
 
     /**
      * This method compares the points provides by the parameter and this object's points to find the
@@ -28,7 +32,7 @@ public record LngLat(double lng, double lat){
      */
     public Boolean closeTo(LngLat point) {
 
-        return this.distanceTo(point) < 0.00015;
+        return distanceTo(point) < 0.00015;
     }
 
     /**
@@ -51,14 +55,14 @@ public record LngLat(double lng, double lat){
      * It creates a ray that starts from the point and stretches out to infinity along the x-axis and
      * counts how many times the ray passes though an edge, if that number is odd, then the point is within the polygon, otherwise it is not.
      * This method allows us to check for convex polygons and well as rectangular ones.
-     * This method is not original and is heavily inspired by a stackoverflow forum: https://stackoverflow.com/questions/8721406/how-to-determine-if-a-point-is-inside-a-2d-convex-polygon
+     * This method is not original and is heavily inspired by a stackoverflow forum: <a href="https://stackoverflow.com/questions/8721406/how-to-determine-if-a-point-is-inside-a-2d-convex-polygon">https://stackoverflow.com/questions/8721406/how-to-determine-if-a-point-is-inside-a-2d-convex-polygon</a>
      * accessed: online 13th October 2022.
      * @return a boolean, true if the point is indeed within the polygon(central area), and false if it isn't
      */
     public Boolean inCentralArea() {
         int i;
         int j;
-        // Stores an array of coordinates objects that make up the central area in the variable listOdPoints
+
         Coordinates[] listOfPoints = CentralArea.getCentralArea().getCoordinates();
 
         // this is our checker for number of edges passed, each time and edge is passed through, the result will flip
@@ -68,9 +72,8 @@ public record LngLat(double lng, double lat){
         // but changes to being i - 1 for the rest of the for loop
         for (i = 0, j = listOfPoints.length - 1; i < listOfPoints.length; j = i++) {
 
-            // The first if statement checks to see of the point is in between the two corner points
-            // The second part checks to see the point of intersection is to the left or the right of the test point,
-            // which means we are required to find the x coordinate of the intersection
+            // Checks to see of the point is in between the two corner points and to see the point of intersection is to the left or the right of the
+            // test point, which means we are required to find the x coordinate of the intersection
             if ((listOfPoints[i].latitude > lat) != (listOfPoints[j].latitude > lat) &&
                     (lng < (listOfPoints[j].longitude - listOfPoints[i].longitude) * (lat - listOfPoints[i].latitude) / (listOfPoints[j].latitude-listOfPoints[i].latitude) + listOfPoints[i].longitude)) {
                 // flip result whenever we pass an intersection

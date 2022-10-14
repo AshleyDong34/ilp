@@ -1,15 +1,11 @@
 package uk.ac.ed.inf;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
-import java.net.URL;
-
+/**
+ * contains the main method
+ */
 public class App
 {
     public static void main( String[] args )
     {
     }
-
-
 }

@@ -1,8 +1,7 @@
 package uk.ac.ed.inf;
 
-import com. fasterxml . jackson . databind . ObjectMapper ;
+import com . fasterxml . jackson . databind . ObjectMapper ;
 import java . io . IOException ;
-import java . net . MalformedURLException ;
 import java . net .URL;
 
 /**
@@ -12,10 +11,11 @@ import java . net .URL;
  */
 public class CentralArea {
     private static CentralArea centralArea;
-    private static final String centralAreaUrl = "https://ilp-rest.azurewebsites.net/centralArea/";
+    private static final String centralAreaBaseUrl = "https://ilp-rest.azurewebsites.net/";
+    private static final String centralAreaRestUrl = "centralArea/";
     private static Coordinates[] centralAreaCoordinates;
     private CentralArea() {
-        setCentralCoordinates();
+        setCentralCoordinates(centralAreaBaseUrl);
     }
 
     /**
@@ -33,10 +33,13 @@ public class CentralArea {
      * This method uses the declared final url string centralAreaUrl to read and deserialize the json string to java class
      * of type Coordinates[]. This is then set to the static centralAreaCoordinates
      */
-    private static void setCentralCoordinates(){
+    private static void setCentralCoordinates(String baseUrl){
         try {
+            if (!baseUrl.endsWith ("/")) {
+                baseUrl += "/";
+            }
             //creates a pointer to the resource on the internet
-            URL url = new URL(centralAreaUrl);
+            URL url = new URL(baseUrl+centralAreaRestUrl);
             //
             centralAreaCoordinates = (new ObjectMapper()).readValue(url, Coordinates[].class);
         } catch (IOException e ) {
